@@ -18,6 +18,26 @@ describe "Module#included" do
     end
   end
 
+  it 'is called after Module#append_features' do
+    begin
+      m = Module.new do
+        def self.append_features(mod)
+          $included_by = nil
+        end
+
+        def self.included(mod)
+          $included_by = mod
+        end
+      end
+
+      c = Class.new { include m }
+
+      $included_by.should == c
+    ensure
+      $included_by = nil
+    end
+  end
+
   it "allows extending self with the object into which it is being included" do
     m = Module.new do
       def self.included(o)
