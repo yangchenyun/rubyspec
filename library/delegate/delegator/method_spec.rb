@@ -22,7 +22,7 @@ describe "Delegator#method" do
   end
 
   ruby_version_is "2.0" do
-    it "returns a method object for protected methods of the delegate object" do
+    it "raise a NameError object for protected methods of the delegate object" do
       lambda {
         @delegate.method(:prot)
       }.should raise_error(NameError)
